@@ -9,5 +9,3 @@
 1. **Executar o script principal:**
    ```bash
    python main.py
-
-
