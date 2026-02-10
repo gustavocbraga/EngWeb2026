@@ -8,6 +8,6 @@
 
 1. **Executar o script principal:**
    ```bash
-   cd scripts
    python main.py
+
 
