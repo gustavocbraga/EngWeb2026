@@ -7,4 +7,7 @@
    cd scripts
 
 1. **Executar o script principal:**
-2. python main.py
+   ```bash
+   cd scripts
+   python main.py
+
