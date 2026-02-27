@@ -1,0 +1,42 @@
+extends layout 
+
+block content
+    .w3-card-4
+        header.w3-container.w3-teal
+            h1= `Exame médico: ${e.nome.primeiro} ${e.nome.último} (${e.idade} Anos)`
+
+        .w3-container
+            ul.w3-ul 
+                li 
+                    b Data do Exame 
+                    span= e.dataEMD 
+                li 
+                    b Morada 
+                    span= e.morada 
+                li 
+                    b Email 
+                    span= e.email  
+                li 
+                    b Clube   
+                    span= e.clube  
+                li 
+                    b Modalidade 
+                    span= e.modalidade 
+                li 
+                    b Modalidade 
+                    span= e.modalidade 
+                li 
+                    b Federado 
+                    span= e.modalidade 
+                li
+                    b Resultado: 
+                    if e.resultado
+                        span.w3-tag.w3-green Passou
+                    else
+                        span.w3-tag.w3-red Falhou
+        
+            .w3-container.w3-padding-16
+                a.w3-btn.w3-round.w3-blue-grey.w3-small(href=`/emd/registar/${e.id}`) Edit
+                a.w3-btn.w3-round.w3-red.w3-small.w3-margin-left(href=`/emd/delete/${e.id}`) Delete
+                a.w3-btn.w3-round.w3-grey.w3-small.w3-margin-left(href="/") Voltar
+                
