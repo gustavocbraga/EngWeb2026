@@ -25,11 +25,9 @@ function collectRequestBodyData(request, callback) {
 }
 
 http.createServer((req,res) => {
-    // Logger: what was requested and when it was requested
     var d = new Date().toISOString().substring(0, 16)
     console.log(req.method + " " + req.url + " " + d)
 
-    // Handling request
     if(static.staticResource(req)){
         static.serveStaticResource(req, res)
     }
@@ -50,6 +48,41 @@ http.createServer((req,res) => {
                         res.write('<p>' + erro + '</p>')
                         res.end()
                     })
+                }
+                else if (req.url == '/emd/stats') {
+                    axios.get("http://localhost:3000/exames")
+                        .then(resp => {
+                            let exames = resp.data;
+                            let stats = {
+                                genero: { M: 0, F: 0 },
+                                clube: {},
+                                federado: { sim: 0, nao: 0 },
+                                resultado: { apto: 0, naoApto: 0 }
+                            };
+
+                            exames.forEach(e => {
+                                if (e.género) stats.genero[e.género]++;
+                                
+                                if (e.clube) {
+                                    stats.clube[e.clube] = (stats.clube[e.clube] || 0) + 1;
+                                }
+
+                                if (e.federado === true) stats.federado.sim++;
+                                else stats.federado.nao++;
+
+                                if (e.resultado === true) stats.resultado.apto++;
+                                else stats.resultado.naoApto++;d
+                            });
+
+                            res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'});
+                            res.write(templates.statsPage(stats,d));
+                            res.end();
+                        })
+                        .catch(erro => {
+                            res.writeHead(500, {'Content-Type': 'text/html;charset=utf-8'});
+                            res.write(templates.errorPage(erro, d));
+                            res.end();
+                        });
                 }
                 else if(/\/emd\/delete\/[0-9a-z]+$/i.test(req.url)){
                     var idExame = req.url.split("/")[3]

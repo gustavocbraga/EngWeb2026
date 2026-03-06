@@ -10,3 +10,4 @@ exports.emdPage = (e, d) => renderPug('emd', { e: e, date: d});
 exports.emdForm = (d) => renderPug('form', { date: d });
 exports.emdFormData = (e, d) => renderPug('form', { emd: e, date: d });
 exports.errorPage = (msg, d) => renderPug('error', { message: msg, date: d });
+exports.statsPage = (stats, d) => renderPug('stats', { stats: stats, date: d });
